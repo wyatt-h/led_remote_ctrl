@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "542419720809",
+    "project_id": "led-remote-ctrl",
+    "storage_bucket": "led-remote-ctrl.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542419720809:android:ef4ee12d8a71d081f0a0f8",
+        "android_client_info": {
+          "package_name": "com.example.mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "542419720809-8kh99qrdc2pt46896ngbsf7n3e1u70de.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-WgK6xRdfkJxIHn60lqPpENOb9QBJoE8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "542419720809-8kh99qrdc2pt46896ngbsf7n3e1u70de.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
