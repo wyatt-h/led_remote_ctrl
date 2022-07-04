@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/registerPage.dart';
+import 'package:mobile/register_page.dart';
 import 'package:mobile/services/authentication_service.dart';
 import 'package:provider/provider.dart';
 

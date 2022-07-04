@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mobile/register_page.dart';
 import 'package:mobile/services/authentication_service.dart';
-import 'package:mobile/home_page.dart';
+import 'package:mobile/control_panel.dart';
 import 'package:mobile/login_page.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
@@ -51,7 +51,7 @@ class AuthenticationWrapper extends StatelessWidget {
     final firebaseUser = context.watch<User?>();
 
     if (firebaseUser != null) {
-      return HomePage();
+      return ControlPanel();
     }
 
     return const LoginPage();
