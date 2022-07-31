@@ -1,15 +1,25 @@
-#include "secrets.hpp"
 #include <WiFiClientSecure.h>
 #include <MQTTClient.h>
 #include <ArduinoJson.h>
 #include <WiFi.h>
+#include <string>
+
+#include "secrets.hpp"
+#include "led_strip.hpp"
+
+using namespace std;
 
 // The MQTT topics that this device should publish/subscribe
 #define AWS_IOT_PUBLISH_TOPIC   "esp32/pub"
-#define AWS_IOT_SUBSCRIBE_TOPIC "esp32/sub"
+#define AWS_IOT_SUBSCRIBE_TOPIC "led_ctrl"
+#define LED_COUNT 60
+#define PIN 16
 
 WiFiClientSecure net = WiFiClientSecure();
 MQTTClient client = MQTTClient(256);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(LED_COUNT, PIN, NEO_GRB + NEO_KHZ800);
+LedStrip ledstrip;
+string mode = "";
 
 void publishMessage()
 {
@@ -25,10 +35,13 @@ void publishMessage()
 void messageHandler(String &topic, String &payload) {
   Serial.println("incoming: " + topic + " - " + payload);
 
-//  StaticJsonDocument<200> doc;
-//  deserializeJson(doc, payload);
-//  const char* message = doc["message"];
+  StaticJsonDocument<200> doc;
+  deserializeJson(doc, payload);
+  const char* message = doc["mode"];
+  ledstrip.setMode(message);
+  Serial.println(message);
 }
+
 
 void connectAWS()
 {
@@ -82,12 +95,21 @@ void connectAWS()
 
 void setup() {
   Serial.begin(9600);
+  // ledstrip.init(LED_COUNT, PIN);
+  ledstrip.init(strip);
   delay(100);
   connectAWS();
 }
 
 void loop() {
-  publishMessage();
+  // publishMessage();
+  ledstrip.lightLedStrip();
+  // ledstrip.defaultCombo();
+  // uint16_t i;
+  // for(i=0; i<ledstrip.numPixels(); i++) {
+  //   strip.setPixelColor(i, 255);
+  //   // strip.setPixelColor(i, strip.Color(255, 255, 255));
+  // }
   client.loop();
   delay(1000);
 }

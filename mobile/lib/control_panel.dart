@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 class ControlPanel extends StatefulWidget {
   const ControlPanel({Key? key}) : super(key: key);
 
+  @override
   ControlPanelState createState() => ControlPanelState();
 }
 

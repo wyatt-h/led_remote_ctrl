@@ -1,6 +1,9 @@
+import 'package:camera/camera.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:mobile/TakePictureScreen.dart';
+import 'package:mobile/home_page.dart';
 import 'package:mobile/register_page.dart';
 import 'package:mobile/services/authentication_service.dart';
 import 'package:mobile/control_panel.dart';
@@ -14,8 +17,28 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  MyAppState createState() => MyAppState();
+}
+
+class MyAppState extends State<MyApp> {
+  late CameraDescription firstCamera;
+
+  @override
+  void initState() {
+    super.initState();
+    initializeCam();
+  }
+
+  Future<void> initializeCam() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    final cameras = await availableCameras();
+    print(cameras);
+    firstCamera = cameras.first;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +58,9 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => const AuthenticationWrapper(),
           '/login': (context) => const LoginPage(),
-          '/register': (context) => const RegisterPage()
+          '/register': (context) => const RegisterPage(),
+          '/camera': (context) => TakePictureScreen(camera: firstCamera),
+          '/control': (context) => const ControlPanel(),
         },
         // home: const AuthenticationWrapper(),
       ),
@@ -51,7 +76,7 @@ class AuthenticationWrapper extends StatelessWidget {
     final firebaseUser = context.watch<User?>();
 
     if (firebaseUser != null) {
-      return ControlPanel();
+      return HomePage();
     }
 
     return const LoginPage();
